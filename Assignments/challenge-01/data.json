@@ -1,0 +1,17 @@
+{
+    "Newt_param": {
+      "tol": 1e-3,
+      "tola": 1e-5,
+      "maxIt": 150,
+      "der_step": 1e-3
+    },
+    "CN_param": {
+      "n_steps": 100,
+      "final_time": 1
+    },
+    "testing": {
+        "fun": "-x[0]*exp(-x[1])",
+        "init_pt": 0.0
+    }
+  }
+  

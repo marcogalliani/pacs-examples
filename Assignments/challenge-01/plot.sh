@@ -5,6 +5,6 @@
 #
 
 gnuplot<<EOF
-plot "result.dat" u 1:2 w lp lw 2 title "uh", "result.dat" u 1:3 w l lw 2 title "uex"
+plot [0:1] "result.dat" u 2:3 w lp lw 2 title "uh", log(1-x**2/2) title "exact solution"
 pause -1
 EOF

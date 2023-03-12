@@ -12,7 +12,7 @@ all: $(EXEC)
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $<
 
 $(EXEC): %: %.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< $(LIBS) -o $@
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< $(LDLIBS) -o $@
 
 clean:
 	$(RM) *.o

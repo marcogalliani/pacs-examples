@@ -23,7 +23,7 @@ int main(){
 	//increment to compute the derivative
 	double h_step = data["Newt_param"].value("der_step",1e-3);
 
-	//TESTING
+	//TESTING FOR (fun, y0)
 	const std::string fun_str  = data["testing"].value("fun", "-t*exp(-y)");
     muParserXInterface<2> fun_parser(fun_str);
 	auto fun = [&](double x, double y){return fun_parser({x,y});};

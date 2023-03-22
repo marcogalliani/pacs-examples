@@ -1,27 +1,30 @@
-#ifndef CRANKNICHOLSON_HPP
-#define CRANKNICHOLSON_HPP
+#ifndef THETA_METHOD_HPP
+#define THETA_METHOD_HPP
 
 #include <vector>
 #include <array>
 #include <functional>
 
 //define the output type of the solver method
-using CN_type_sol = std::array<std::vector<double>,2>;
+using theta_sol_type = std::array<std::vector<double>,2>;
 
 
-class CrankNicholson{
+class ThetaMethod{
     public:
         //constructor
-        CrankNicholson(const double final_time,
+        ThetaMethod(const double theta,
+                        const double final_time,
                         const unsigned num_steps,
                         const double newt_tol,
                         const double newt_tola,
                         const unsigned newt_maxIt,
                         const double h_step);
         //solving method
-        CN_type_sol solve(const std::function<double(double,double)> fun, const double y0);
+        theta_sol_type operator()(const std::function<double(double,double)> fun, const double y0);
 
     private:
+        //theta parameter
+        double m_theta;
         //parameters that characterise CN
         const double m_final_time;
         const unsigned m_num_steps;
@@ -33,4 +36,4 @@ class CrankNicholson{
         const double m_h_step;
 };
 
-#endif /* CRANKNICHOLSON_HPP */
+#endif /* THETA_METHOD_HPP */

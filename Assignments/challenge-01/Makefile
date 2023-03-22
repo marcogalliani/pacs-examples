@@ -1,71 +1,61 @@
-############################################################
-#
-# An example of Makefile for the course on 
-# Advanced Programming for Scientific Computing
-# It should be modified for adapting it to the various examples
-#
-############################################################
-#
-# The environmental variable PACS_ROOT should be set to the
-# root directory where the examples reside. In practice, the directory
-# where this file is found. The resolution of PACS_ROOT is made in the
-# Makefile.h file, where other important variables are also set.
-# The only user defined variable that must be set in this file is
-# the one indicating where Makefile.h resides
+CXX      ?= g++
+CXXFLAGS ?= -std=c++20
 
-MAKEFILEH_DIR=../../Examples
-#
-include $(MAKEFILEH_DIR)/Makefile.inc
-#
-# You may have an include file also in the current directory
-#
--include Makefile.inc
+#specifying directory of the examples
+PACS_ROOT?=/home/jellyfish/shared-folder/pacs-examples/Examples
 
-#
-# The general setting is as follows:
-# mains are identified bt main_XX.cpp
-# all other files are XX.cpp
-#
+#to use muparser (taken from the Makefile.inc given as an example)
+MUPARSER_LIBDIR=-L$(PACS_ROOT)/lib
+MUPARSERX_LIBDIR=-L$(PACS_ROOT)/lib
+MUPARSERX_INCLUDE=-I$(PACS_ROOT)/include/muparserx
+LIBRARY_NAME=muParserInterface
+STATIC_LIBFILE=lib$(LIBRARY_NAME).a
+DYNAMIC_LIBFILE=lib$(LIBRARY_NAME).so
 
-# get all files *.cpp
-SRCS=$(wildcard *.cpp)
-# get the corresponding object file
+#including the header files
+CPPFLAGS ?= -O3 -Wall -pedantic -I../../Examples/include \
+            -isystem$(mkBoostInc) -isystem$(mkTbbInc)
+CPPFLAGS+=$(MUPARSER_INCLUDE) $(MUPARSERX_INCLUDE)
+#loading the shared libraries
+LDLIBS   ?= -L$(mkBoostLib) -L$(mkTbbLib) \
+            -lboost_iostreams -lboost_system -lboost_filesystem -ltbb
+LDLIBS+=-L. -l$(LIBRARY_NAME) $(MUPARSER_LIBDIR) -lmuparser \
+-L$(MUPARSERX_LIBDIR) -lmuparserx -L$(PACS_ROOT)/lib -lpacs
+#telling the loader where to look for shared libraries
+LDFLAGS ?= -Wl,-rpath=../../Examples/lib
+#specify the linker
+LINK.o := $(LINK.cc) 
+
+DEPEND = make.dep
+
+EXEC = main
+SRCS = $(wildcard *.cpp)
 OBJS = $(SRCS:.cpp=.o)
-# get all headers in the working directory
-HEADERS=$(wildcard *.hpp)
-#
-exe_sources=$(filter main%.cpp,$(SRCS))
-EXEC=$(exe_sources:.cpp=)
 
-#========================== ORA LA DEFINIZIONE DEGLI OBIETTIVI
-.phony= all clean distclean doc
-
-.DEFAULT_GOAL = all
+.PHONY = all $(EXEC) $(OBJS) clean distclean $(DEPEND)
 
 all: $(DEPEND) $(EXEC)
-
-clean:
-	$(RM) -f $(EXEC) $(OBJS)  *.out result.dat
-
-distclean:
-	$(MAKE) clean
-	$(RM) -f ./doc $(DEPEND) result.dat
-
-doc:
-	doxygen $(DOXYFILE)
+	
 
 $(EXEC): $(OBJS)
 
-$(OBJS): $(SRCS)
+$(OBJS): %.o: %.cpp
+
+clean:
+	$(RM) $(DEPEND)
+	$(RM) *.o
+	$(RM) result.dat solution.png
+
+
+distclean: clean
+	$(RM) $(EXEC)
+	$(RM) *.csv *.out *.bak *~
 
 $(DEPEND): $(SRCS)
-	-\rm $(DEPEND)
-	for f in $(SRCS); do \
-	$(CXX) $(STDFLAGS) $(CPPFLAGS) -MM $$f >> $(DEPEND); \
+	@$(RM) $(DEPEND)
+	@for file in $(SRCS); \
+	do \
+	  $(CXX) $(CPPFLAGS) $(CXXFLAGS) -MM $${file} >> $(DEPEND); \
 	done
 
 -include $(DEPEND)
-
-
-
-

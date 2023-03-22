@@ -1,7 +1,7 @@
 CXX      ?= g++
 CXXFLAGS ?= -std=c++20
 CPPFLAGS ?= -O3 -Wall -pedantic -I. -isystem../../../../Examples/include \
-            -isystem$(mkBoostInc) -isystem$(mkTbbInc)
+            -isystem$(mkBoostInc) -isystem$(mkTbbInc) 
 LDLIBS   ?= -L$(mkBoostLib) -L$(mkTbbLib) \
             -lboost_iostreams -lboost_system -lboost_filesystem -ltbb
 LINK.o := $(LINK.cc) # Use C++ linker.

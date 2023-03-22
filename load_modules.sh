@@ -7,5 +7,6 @@ module load superlu
 module load eigen
 module load openblas
 module load suitesparse
+module load boost
 # for the example on file i/o
 # module load hdf5 

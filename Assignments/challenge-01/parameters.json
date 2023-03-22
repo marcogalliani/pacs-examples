@@ -5,7 +5,8 @@
       "maxIt": 150,
       "der_step": 1e-3
     },
-    "CN_param": {
+    "theta_param": {
+      "theta": 0.5,
       "n_steps": 100,
       "final_time": 1
     },

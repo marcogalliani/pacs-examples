@@ -1,4 +1,4 @@
-#include "CrankNicholson.hpp"
+#include "theta-method.hpp"
 #include "basicZeroFun.hpp"
 #include "Derivatives.hpp"
 
@@ -8,23 +8,25 @@
 
 
 //constructor
-CrankNicholson::CrankNicholson(const double final_time,
-                                const unsigned num_steps,
-                                const double newt_tol,
-                                const double newt_tola,
-                                const unsigned newt_maxIt,
-                                const double h_step):
-                                m_final_time(final_time),
-                                m_num_steps(num_steps),
-                                m_newt_tol(newt_tol),
-                                m_newt_tola(newt_tola),
-                                m_newt_maxIt(newt_maxIt),
-                                m_h_step(h_step)
+ThetaMethod::ThetaMethod(const double theta,
+                            const double final_time,
+                            const unsigned num_steps,
+                            const double newt_tol,
+                            const double newt_tola,
+                            const unsigned newt_maxIt,
+                            const double h_step):
+                            m_theta(theta),
+                            m_final_time(final_time),
+                            m_num_steps(num_steps),
+                            m_newt_tol(newt_tol),
+                            m_newt_tola(newt_tola),
+                            m_newt_maxIt(newt_maxIt),
+                            m_h_step(h_step)
 {}
 
 //solver
-CN_type_sol
-CrankNicholson::solve(const std::function<double(double, double)> fun, const double y0)
+theta_sol_type
+ThetaMethod::operator()(const std::function<double(double, double)> fun, const double y0)
 {
     double h_step=m_final_time/m_num_steps; //computing discretisation step
     std::vector<double> th(m_num_steps+1); 
@@ -36,7 +38,7 @@ CrankNicholson::solve(const std::function<double(double, double)> fun, const dou
     uh[0]=y0;
 
     for(size_t it=0; it<m_num_steps; it++){
-        auto phi = [&](double u){return u - uh[it]-h_step/2.0*(fun(th[it],uh[it])+fun(th[it+1],u));};
+        auto phi = [&](double u){return u - uh[it]-h_step*((1-m_theta)*fun(th[it],uh[it])+m_theta*fun(th[it+1],u));};
         //computing the derivative of phi
         auto d_phi=apsc::makeForwardDerivative<1>(phi,m_h_step);
         //Newton method
@@ -51,11 +53,10 @@ CrankNicholson::solve(const std::function<double(double, double)> fun, const dou
         }
 
     }
-    CN_type_sol solution;
+    theta_sol_type solution;
     solution[0] = th;
     solution[1] = uh;
 
     return solution;
-
 }
 

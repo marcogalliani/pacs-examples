@@ -9,10 +9,6 @@
       "theta": 0.5,
       "n_steps": 100,
       "final_time": 1
-    },
-    "testing": {
-        "fun": "-x[0]*exp(-x[1])",
-        "init_pt": 0.0
     }
   }
   

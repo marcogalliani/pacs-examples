@@ -1,0 +1,7 @@
+{
+    "testing": {
+        "fun": "-x[0]*exp(-x[1])",
+        "init_pt": 0.0,
+        "exact_y": "log(1-(x[0]^2)/2)"
+    }
+}

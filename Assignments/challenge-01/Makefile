@@ -13,7 +13,7 @@ STATIC_LIBFILE=lib$(LIBRARY_NAME).a
 DYNAMIC_LIBFILE=lib$(LIBRARY_NAME).so
 
 #including the header files
-CPPFLAGS ?= -O3 -Wall -pedantic -I../../Examples/include \
+CPPFLAGS ?= -O3 -Wall -pedantic -I$(PACS_ROOT)/include \
             -isystem$(mkBoostInc) -isystem$(mkTbbInc)
 CPPFLAGS+=$(MUPARSER_INCLUDE) $(MUPARSERX_INCLUDE)
 #loading the shared libraries
@@ -22,7 +22,7 @@ LDLIBS   ?= -L$(mkBoostLib) -L$(mkTbbLib) \
 LDLIBS+=-L. -l$(LIBRARY_NAME) $(MUPARSER_LIBDIR) -lmuparser \
 -L$(MUPARSERX_LIBDIR) -lmuparserx -L$(PACS_ROOT)/lib -lpacs
 #telling the loader where to look for shared libraries
-LDFLAGS ?= -Wl,-rpath=../../Examples/lib
+LDFLAGS ?= -Wl,-rpath=$(PACS_ROOT)/lib
 #specify the linker
 LINK.o := $(LINK.cc) 
 
@@ -35,7 +35,6 @@ OBJS = $(SRCS:.cpp=.o)
 .PHONY = all $(EXEC) $(OBJS) clean distclean $(DEPEND)
 
 all: $(DEPEND) $(EXEC)
-	
 
 $(EXEC): $(OBJS)
 
@@ -44,7 +43,7 @@ $(OBJS): %.o: %.cpp
 clean:
 	$(RM) $(DEPEND)
 	$(RM) *.o
-	$(RM) result.dat solution.png
+	$(RM) result.dat solution.png 
 
 
 distclean: clean

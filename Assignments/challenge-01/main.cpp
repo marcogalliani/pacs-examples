@@ -43,6 +43,7 @@ int main(){
 		exact_sol[i] = ex_y(PC_sol[0][i]);
 		f << PC_sol[0][i] << "\t\t" << PC_sol[1][i] << "\t\t" << exact_sol[i] << "\n";
 	}
+	f.close();
 
 	//PLOTTING THE RESULTS IN solution.png
 	Gnuplot gp;

@@ -26,5 +26,15 @@ int main(int argc, char **argv) {
     const auto y = df4(1.0);
   };
 
+  Naive df_naive4(f,4,1e-2);
+
+  const auto test_naive = [&]() {
+    const auto y = df4(1.0);
+  };
+
+ 
+
   std::cout << "Test hard coded: " << timeit(test_manual, N) << "[ms]\n";
+  std::cout << "Test naive: " << timeit(test_naive, N) << "[ms]\n";
+
 }

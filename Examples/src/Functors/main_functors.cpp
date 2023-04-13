@@ -3,10 +3,9 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
-int
-main()
+int main()
 {
-  using namespace myfunctors; // only to simplify things
+  using namespace myfunctors; // only to simplify things  
   //! Creating an object
   Sqrt5 sqrt5;
   // comput fifth root of five
@@ -22,7 +21,7 @@ main()
   sqrt5.tolerance = 1.e-2;
   std::cout << "sqrt5(5)=" << sqrt5(5) << " with tol=1e-2" << std::endl;
   Isgreater        ig(5.0);
-  std::vector<int> v = {1, 2, 3, 4, 6, 7, 8, 18, 25};
+  std::vector<int> v = {1, 2, 3, 4, 6, 7, 8, 18, 25};    
   auto             found = std::find_if(v.begin(), v.end(), ig);
   if(found != v.end())
     std::cout << " first element greater than " << ig.my_value << " is "

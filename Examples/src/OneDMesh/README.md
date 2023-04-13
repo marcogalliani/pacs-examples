@@ -1,21 +1,26 @@
-#Classes to handle a simple mesh#
+# Classes to handle a simple one-dimensional mesh #
 
-You need first to compile and install RK45:
+You need first to compile and install RKFSolver
+go to `Examples/src/NewtonSolver`
+do
+```c++
+ make -B alllibs DEBUG=no; make install
+```
+to install the tools needed by RKFSolver. Then
 
-go to `Examples/src/RK45` and do
+go to `Examples/src/RKFSolver` and do
+```c++
+make install
+```
+It will install the header file for the runge kutta fehlberg solver
 
-    make distclean
-    make dynamic DEBUG=no  (to disable debugging)
-    make install
-    make distclean
+Go back to this directory and run 
+```c++
+make dynamic (or static)
+```
+use `DEBUG=no` if you want full optimization.
 
-Include files go to the `Examples/include` and the library `librk45.so` in `Examples/lib`.
-
-Go back to this directory and run make distclean; make dynamic (or static)
-
-Make sure to set `LD_LIBRARY_PATH` accordingly (not necessary anymore). In 
-
-`runTestGenerator.sh` you have a scrit that runs an example of how to
+In `runTestGenerator.sh` you have a scrit that runs an example of how to
 launch a test.
 
 **IF YOU WANT TO INSTALL THE CODE (needed for other examples) do**
@@ -32,7 +37,7 @@ provided in the directory `rk45/`
 
 `main_TestGenerator` is a simple application to test the sofware and `run_test_generator.sh` is a script that runs the code and lauches `gnuplot`.
 
-#What do I learn here?#
+# What do I learn here? #
 - An example of the *strategy design pattern*, or policy. The way the mesh is generated is a policy of the class Mesh1d. According to the policy the mesh can be univorm or with a prescribed spacing;
 - A way to compute the nodes of a mesh by integrating a spacing function using an ode solver. 
 

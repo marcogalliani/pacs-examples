@@ -269,3 +269,4 @@ make.dep
 /Examples/src/Utilities/test_overloaded
 /Examples/share/cmake/*
 /Examples/share/pkgconfig/*
+.DS_store

@@ -1,50 +1,51 @@
 CXX      ?= g++
 CXXFLAGS ?= -std=c++20
 
-#specifying directory of the examples
-PACS_ROOT?=/workspaces/pacs-examples/Examples
-
 #including the header files
-CPPFLAGS ?= -O3 -Wall -pedantic -I$(PACS_ROOT)/include \
-            -isystem$(mkBoostInc) -isystem$(mkTbbInc)
+INCLUDE ?= -I. -Iinclude -isystem$(mkBoostInc) -isystem$(mkTbbInc)
+
+CPPFLAGS ?= -O3 -Wall -pedantic 
+
 #loading the shared libraries
-LDLIBS   ?= -L$(mkBoostLib) -L$(mkTbbLib) \
-            -lboost_iostreams -lboost_system -lboost_filesystem -ltbb
+LDLIBS   ?= -L$(mkBoostLib) -L$(mkTbbLib) -Llib\
+            -lboost_iostreams -lboost_system -lboost_filesystem -ltbb -L. -ldl \
+			-lmuparser
 
 #telling the loader where to look for shared libraries
-LDFLAGS ?= -Wl,-rpath=$(PACS_ROOT)/lib
+LDFLAGS ?= -Wl,-rpath=. -Wl,-rpath=lib
+
 #specify the linker
 LINK.o := $(LINK.cc) 
 
-DEPEND = make.dep
-
-EXEC = main
+#gather all .cpp files
 SRCS = $(wildcard *.cpp)
-OBJS = $(SRCS:.cpp=.o)
 
-.PHONY = all $(EXEC) $(OBJS) clean distclean $(DEPEND)
+#solvers to compile
+SOLVERS = QuasiNewton Bisection Secant
 
-all: $(DEPEND) $(EXEC)
+all: linking
 
-$(EXEC): $(OBJS)
+objects: $(SRCS)
+#compiling
+	$(CXX) $(CXXFLAGS) ${INCLUDE} $(CPPFLAGS) -c main.cpp
+#shared libraries
+	for S in $(SOLVERS); do \
+	$(CXX) $(CXXFLAGS) $(INCLUDE) $(CPPFLAGS) -fPIC -c $$S.cpp; \
+	$(CXX) -shared $$S.o -o lib$$S.so; \
+	done
 
-$(OBJS): %.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDE) $(CPPFLAGS) -fPIC -c SolverFactory.cpp 
+	$(CXX) -shared SolverFactory.o -o libsolverFactory.so
+	 
+linking: objects
+	$(CXX) $(LDFLAGS) $(LDLIBS) -L. -lsolverFactory main.o -o main
 
 clean:
-	$(RM) $(DEPEND)
 	$(RM) *.o
-	$(RM) result.dat solution.png 
-
+	$(RM) *.so
 
 distclean: clean
 	$(RM) $(EXEC)
 	$(RM) *.csv *.out *.bak *~
 
-$(DEPEND): $(SRCS)
-	@$(RM) $(DEPEND)
-	@for file in $(SRCS); \
-	do \
-	  $(CXX) $(CPPFLAGS) $(CXXFLAGS) -MM $${file} >> $(DEPEND); \
-	done
 
--include $(DEPEND)

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="Remote Host (3cce3798-e293-432a-b4d2-455128595ff3)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/test-env" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="Remote Host (ae1cadf3-81ff-4f86-936e-431f63a18ac1)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.TYCJS6qKsC" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

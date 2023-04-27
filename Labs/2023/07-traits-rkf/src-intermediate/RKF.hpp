@@ -135,6 +135,7 @@ RKFResult<VariableType, TimeType> RKF<ButcherType, VariableType, TimeType>::solv
   auto h = h0;
 
   // TODO: add `rejected` variable, default to false
+  bool rejected = false;
 
   // Loop over each timestep
   for (unsigned iter = 0; iter < n_max_steps; ++iter) {
@@ -147,10 +148,12 @@ RKFResult<VariableType, TimeType> RKF<ButcherType, VariableType, TimeType>::solv
     // use `RKFstep`
     const auto [y_low, y_high] = RKFstep(t, y.back(), h);
 
-    // update t and y
-    t += h;
-    y.push_back(y_high);
-    time.push_back(t);
+    const auto error = norm<VariableType>(y_low-y_high);
+    if(error <= tol*h/time_span){
+      // update t and y
+      t += h;
+      y.push_back(y_high);
+      time.push_back(t);
 
     // TODO: implement timestep adaptivity
     // 1. compute the error as the norm of the difference between y_low and y_high

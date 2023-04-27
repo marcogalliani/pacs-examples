@@ -1,0 +1,3 @@
+libQuasiNewton.so
+libSecant.so
+libBisection.so

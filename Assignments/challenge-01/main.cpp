@@ -5,7 +5,7 @@
 #include "ThetaMethod.hpp"
 #include "json.hpp"
 #include "muParserXInterface.hpp"
-#include "gnuplot-iostream.hpp" //interface with gnuplot
+#include "gnuplot-iostream.hpp" // interface with gnuplot
 
 using json = nlohmann::json;
 using namespace MuParserInterface;

@@ -1,30 +1,27 @@
 CXX      ?= g++
 CXXFLAGS ?= -std=c++20
 
-#specifying directory of the examples
-PACS_ROOT?=/home/jellyfish/shared-folder/pacs-examples/Examples
-
 #to use muparser (taken from the Makefile.inc given as an example)
-MUPARSER_LIBDIR=-L$(PACS_ROOT)/lib
-MUPARSERX_LIBDIR=-L$(PACS_ROOT)/lib
-MUPARSERX_INCLUDE=-I$(PACS_ROOT)/include/muparserx
+MUPARSER_LIBDIR=-L./lib
+MUPARSERX_LIBDIR=-L./lib
+MUPARSERX_INCLUDE=-I./include/muparserx
 LIBRARY_NAME=muParserInterface
 STATIC_LIBFILE=lib$(LIBRARY_NAME).a
 DYNAMIC_LIBFILE=lib$(LIBRARY_NAME).so
 
 #including the header files
-CPPFLAGS ?= -O3 -Wall -pedantic -I$(PACS_ROOT)/include \
+CPPFLAGS ?= -O3 -Wall -pedantic -I./include \
             -isystem$(mkBoostInc) -isystem$(mkTbbInc)
 CPPFLAGS+=$(MUPARSER_INCLUDE) $(MUPARSERX_INCLUDE)
 #loading the shared libraries
-LDLIBS   ?= -L$(mkBoostLib) -L$(mkTbbLib) \
+LDLIBS   = -L${mkBoostLib} -L${mkTbbLib} \
             -lboost_iostreams -lboost_system -lboost_filesystem -ltbb
 LDLIBS+=-L. -l$(LIBRARY_NAME) $(MUPARSER_LIBDIR) -lmuparser \
--L$(MUPARSERX_LIBDIR) -lmuparserx -L$(PACS_ROOT)/lib -lpacs
+-L$(MUPARSERX_LIBDIR) -lmuparserx -L./lib -lpacs
 #telling the loader where to look for shared libraries
-LDFLAGS ?= -Wl,-rpath=$(PACS_ROOT)/lib
+LDFLAGS ?= -Wl,-rpath=./lib
 #specify the linker
-LINK.o := $(LINK.cc) 
+LINK.o := $(LINK.cc)
 
 DEPEND = make.dep
 
@@ -43,7 +40,7 @@ $(OBJS): %.o: %.cpp
 clean:
 	$(RM) $(DEPEND)
 	$(RM) *.o
-	$(RM) result.dat solution.png 
+	$(RM) result.dat solution.png
 
 
 distclean: clean

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CLionExternalBuildManager">
+    <target id="de431d1f-4515-49c1-9deb-c67c45f0baa6" name="all" defaultType="MAKE">
+      <configuration id="8ec6f456-2257-4825-8dc6-ccfaf13bfdb6" name="all" toolchainName="Docker" />
+    </target>
+  </component>
+</project>

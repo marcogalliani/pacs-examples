@@ -13,8 +13,6 @@
 #include "json.hpp"
 #include <fstream>
 
-#include "gnuplot-iostream.hpp"
-
 using json = nlohmann::json;
 
 ThetaParams::ThetaParams(const std::string &filename){

@@ -1,0 +1,23 @@
+{
+    "Common parameters": {
+        "tol_r": 1e-3,
+        "tol_i": 1e-3,
+        "maxIt": 300,
+        "x0": -0.5
+    },
+    "Quasi-Newton":{
+        "der_step": 1e-3
+    },
+    "Bisection":{
+        "lower bound": -1,
+        "upper bound": 0
+    },
+    "Secant":{
+        "x1": -0.75
+    },
+    
+    "Testing": {
+        "fun" : "0.5 - exp(_pi*x)"
+    }
+}
+  

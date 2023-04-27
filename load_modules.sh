@@ -7,6 +7,10 @@ module load superlu
 module load eigen
 module load openblas
 module load suitesparse
+<<<<<<< HEAD
 module load boost
+=======
+module load pybind11
+>>>>>>> c51dda82d4a8d15d522a82586f08dab5c9a54b91
 # for the example on file i/o
 # module load hdf5 

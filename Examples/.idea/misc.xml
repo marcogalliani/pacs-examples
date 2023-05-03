@@ -12,6 +12,7 @@
       <file path="$PROJECT_DIR$/src/LinearAlgebraUtil/test" />
       <file path="$PROJECT_DIR$/src/Mesh" />
       <file path="$PROJECT_DIR$/src/MetaProgramming/SwitchType" />
+      <file path="$PROJECT_DIR$/src/MyMat0" />
       <file path="$PROJECT_DIR$/src/NewtonSolver" />
       <file path="$PROJECT_DIR$/src/Numeric_Limits" />
       <file path="$PROJECT_DIR$/src/OneDMesh" />
@@ -21,6 +22,7 @@
       <file path="$PROJECT_DIR$/src/SmartPointers" />
       <file path="$PROJECT_DIR$/src/Utilities" />
       <file path="$PROJECT_DIR$/src/muParserInterface" />
+      <file path="$PROJECT_DIR$/src/pybind11/OneDMesh" />
       <file path="$PROJECT_DIR$/src/try" />
     </sourceRoots>
     <libraryRoots>
@@ -31,17 +33,17 @@
   <component name="MakefileSettings">
     <option name="linkedExternalProjectsSettings">
       <MakefileProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/src/adtTree" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/src/pybind11/OneDMesh" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/src/adtTree" />
+            <option value="$PROJECT_DIR$/src/pybind11/OneDMesh" />
           </set>
         </option>
         <option name="version" value="2" />
       </MakefileProjectSettings>
     </option>
   </component>
-  <component name="MakefileWorkspace" PROJECT_DIR="$PROJECT_DIR$/src/adtTree">
+  <component name="MakefileWorkspace" PROJECT_DIR="$PROJECT_DIR$/src/pybind11/OneDMesh">
     <contentRoot DIR="$PROJECT_DIR$" />
   </component>
 </project>

@@ -8,9 +8,13 @@ inline static constexpr size_t vec_size = 1000;
 
 int lookup(const size_t &index) {
   // Generate an arbitrary dataset.
-  auto data = std::vector<int>(vec_size);
-  std::iota(data.begin(), data.end(), 0);
+  static std::vector<int> data; //static help us to improve a lot performances
+  
 
+  if(data.empty()){
+    data = std::vector<int>(vec_size);
+    std::iota(data.begin(), data.end(), 0); //iota fills a vector with subsequential values
+  }
   return data[index];
 }
 

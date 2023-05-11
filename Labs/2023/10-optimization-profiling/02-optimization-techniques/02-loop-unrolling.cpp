@@ -2,6 +2,10 @@
 #include <iostream>
 #include <vector>
 
+
+//The reason behind loop unrolling is that comparison operations are costly. Unrolling the loops allows us to reduce the number of comparison op.
+//However, it is not a technique to be implemented explicitly, the compiler can managing (if we tell him to do with the correct compiling options)
+
 inline static constexpr size_t vec_size = 1000;
 
 int multiply(const std::vector<int> &data) {

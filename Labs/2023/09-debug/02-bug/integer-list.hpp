@@ -83,7 +83,7 @@ public:
 
     while (!t->isLast())
       {
-        t = next;
+        t = t->next;
         ++ret;
       }
 
@@ -96,7 +96,7 @@ public:
   {
     Node *t = this;
     while (!t->isLast())
-      t = next;
+      t = t->next;
 
     t->setNext(theNext);
     theNext->setPrevious(t);
@@ -109,7 +109,7 @@ public:
   {
     Node *t = this;
     while (!t->isLast())
-      t = next;
+      t = t->next;
 
     Node *theNewNode = new Node(a);
     t->setNext(theNewNode);
@@ -143,7 +143,7 @@ public:
     Node *t = this;
     while (!t->isLast())
       {
-        t = next;
+        t = t->next;
         if (t->getData() == value)
           return t;
       }
@@ -158,10 +158,10 @@ public:
     Node *t = this;
     while (!t->isLast())
       {
-        std::cout << t.getData() << ", ";
-        t = next;
+        std::cout << t->getData() << ", ";
+        t = t->next;
       }
-    std::cout << t.getData() << std::endl;
+    std::cout << t->getData() << std::endl;
   }
 
 protected:

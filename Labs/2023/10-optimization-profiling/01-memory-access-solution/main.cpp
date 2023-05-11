@@ -4,9 +4,10 @@
 #include <iostream>
 #include <random>
 #include <vector>
+#include <algorithm>
 
 // The cache size of your processor, in bytes. Adjust accordingly.
-// Use the command `getconf -a | grep "LEVEL1_DCACHE_SIZE"`
+// Use the command `getconf -a | grep "LEVEL1_DCACHE_SIZE"` -> output: 65536
 const size_t cache_size = 8 * 1024 * 1024;  // 8 * KB * MB
 
 // The number of integers that fit in the CPU cache,
@@ -57,8 +58,14 @@ long int compute_pointer(const std::vector<int *> &data) {
 
 void test(unsigned int iterations, std::vector<int> &data,
           const std::function<long int()> &compute) {
+
+  //Our test data set
+  auto data = std::vector<int> ints_in_cache
+
   // Seed the RNG with actual hardware/OS randomness from random_device.
   std::default_random_engine engine(std::random_device{}());
+
+  // std::shuffle(ptrv.begin(),ptrv.end(),engine);
 
   // Since the "work" we are doing is squaring each integer,
   // initialize them with some value between 1 and 10.

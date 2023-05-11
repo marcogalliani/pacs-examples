@@ -37,6 +37,8 @@ class matrix {
 
   void factorize();
 
+  matrix mmult_eigen(const matrix &other);
+
  private:
   std::vector<double> m_data;
   std::vector<int> m_p;

@@ -44,6 +44,7 @@ main(int argc, char **argv)
         {
           ++ping_pong_count;
 
+          //partner_rank is the recipient process ogf this communication
           MPI_Send(&ping_pong_count, 1, MPI_INT, partner_rank, 0, mpi_comm);
 
           std::cout << "Ping! Rank " << mpi_rank << " ---> rank "
@@ -52,6 +53,7 @@ main(int argc, char **argv)
         }
       else
         {
+          //partner_rank is the sender process ogf this communication
           MPI_Recv(&ping_pong_count, 1, MPI_INT, partner_rank, 0, mpi_comm,
                    &status);
 

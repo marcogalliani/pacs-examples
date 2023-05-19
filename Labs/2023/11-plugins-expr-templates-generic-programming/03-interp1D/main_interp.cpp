@@ -7,6 +7,7 @@
 int
 main()
 {
+  //data are of type (x_i,y_i)
   const std::vector<std::array<double, 2>> v = {{0.1, 2.0},
                                                 {0.3, 3.0},
                                                 {0.5, 5.0},

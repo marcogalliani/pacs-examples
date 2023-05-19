@@ -168,9 +168,7 @@ main(int argc, char **argv)
     auto stop = std::chrono::system_clock::now();
 
     std::cout << "Time elapsed (with expression templates): "
-              << std::chrono::duration_cast<std::chrono::milliseconds>(stop -
-                                                                       start)
-                   .count()
+              << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count()
               << "ms" << std::endl;
   }
 

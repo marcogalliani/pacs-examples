@@ -59,12 +59,12 @@
  * interpolation nodes
  */
 template <class RAIterator,
-          class Key,
-          class ExtractKey,
+          class Key, 
+          class ExtractKey, 
           class ExtractValue,
           class CompareKey = std::less<Key>>
 auto
-interp1D(RAIterator const &  begin,
+interp1D(RAIterator const &  begin, 
          RAIterator const &  end,
          Key const &         keyVal,
          ExtractKey const &  extractKey,
@@ -85,7 +85,69 @@ interp1D(RAIterator const &  begin,
     throw std::runtime_error(
       "Interp1D: I need at least 2 points to interpolate!");
 
-  return extractValue(begin);
+  // 1. find the interval [a,b] that contains keyVal
+  // we have to use iterators to keep it generic
+  /*
+  auto b = std::next(begin);
+  //generic loop theough iterators
+  while(b != end){
+    if(!comp(extractKey(b),keyVal)){
+      break;
+    }
+    b = std::next(b); // std::advance(b) // b++
+  }
+  a = std::next(b; -1); //going back of 1, we can do this since the iterator is bidirectional and then we can go back
+  */
+
+  /*
+  RAIterator a = begin;
+  RAIterator b = end;
+  for(auto dis = std::distance(a,b); dis > 1;){
+    RAIterator c = std::next(a,dis/2); //computing the midpoint
+    // safer wrt overflow: a + (b-a)/2 (== (b+a)/2 usual formula for midpoint)
+    if(comp(keyVal,extractKey(c))){
+      b = c;
+    }
+    else{
+      a = c;
+      
+    }
+    dis = std::distance(a,b);
+  }
+  b = std::next(a,1);
+  */
+
+  //there's also a function in the standard library that does the same thing (check the doc)
+  const auto b = std::lower_bound(
+    std::next(begin),
+    std::next(end,-1),
+    keyVal,
+    [&comp, &extractKey](const auto &elem, const Key &to_find){
+      return comp(extractKey(&elem),to_find); //passing the adress of elem
+    }    
+  );
+  const auto a = std::next(b,-1);
+
+  if(b == end){
+    b = a;
+    a = std:.next(a,-1);
+  }
+
+  // 2. do a linear interpolation according to [a,b] [f(a),f(b)]
+  const auto valueLeft = extractValue(a); //f(a) 
+  const auto keyLeft = extractKey(a); //a
+  const auto valueRight = extractValue(b); //f(b) 
+  const auto keyRight = extractKey(b); //b
+
+  const auto len = keyRight - keyLeft;
+
+  // I assume no nodes are repeated
+  const auto coeffRight = (keyVal - keyLeft) / len;
+  const auto coeffLeft  = 1.0 - coeffRight;
+
+  return valueLeft * coeffLeft + valueRight * coeffRight;
+
+
 }
 
 #endif /* EXAMPLES_SRC_INTERP1D_INTERP1D_HPP_ */

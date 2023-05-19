@@ -72,6 +72,7 @@ private:
 
 /*!
  * Serial version, implementing the same recursive algorithm
+ * (more efficient than recursive)(cannot be parallelized because of data races)
  */
 class Fibonacci_s
 {
@@ -94,7 +95,6 @@ private:
         fibs[n]=n;
         return n;
       }
-
     i = fib(n-1ul);
     j = fib(n-2ul);
     fibs[n]= i+j;

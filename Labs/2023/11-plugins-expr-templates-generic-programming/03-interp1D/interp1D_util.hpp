@@ -24,7 +24,14 @@ interp1D(std::vector<T> const &v,
          double const &        keyVal,
          CompOper const &      comp = std::less<double>{})
 {
-  return 0.0;
+  return interp1D(
+    v.begin(),
+    v.end(),
+    keyVal,
+    [](auto it){return (*it)[0];},
+    [](auto it){return (*it)[1];},
+    comp
+  );
 }
 
 
@@ -47,7 +54,14 @@ interp1D(std::vector<double> const &keys,
          double const &             keyVal,
          CompOper const &           comp = std::less<double>{})
 {
-  return T{};
+  return interp1D(
+    keys.begin(),
+    keys.end(),
+    keyVal,
+    [](auto it){return *it;},
+    [&values,&keys](auto it){return values[std::distance(keys.cbegin(),it)];}, //index is the distance between the adress of the first point and the adress of where we are
+    comp
+  );
 }
 
 #endif /* EXAMPLES_SRC_INTERP1D_INTERP1D_UTIL_HPP_ */

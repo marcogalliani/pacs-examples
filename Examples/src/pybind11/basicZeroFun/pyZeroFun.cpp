@@ -3,7 +3,7 @@
 #include "pybind11/functional.h"
 #include "basicZeroFun.hpp"
 
-// you need to instantiate the templates
+// you need to instantiate the templates (we cannot use templates)
 using funct=const std::function<double (double)> &;
 
 template double apsc::regulaFalsi(funct f, double a, double b, double tol, double tola);

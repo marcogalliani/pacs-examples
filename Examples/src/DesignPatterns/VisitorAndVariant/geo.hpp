@@ -3,7 +3,7 @@
 #include <array>
 namespace Geometry2
 {
-//! the base class of visitors
+//! the base clas0'p90s of visitors
 class ShapeVisitor; // FORWARD DECLARATION
 
 //! a class of elements that supports the visitor pattern

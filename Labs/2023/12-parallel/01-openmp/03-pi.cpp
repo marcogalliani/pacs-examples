@@ -41,19 +41,27 @@ main(int argc, char **argv)
  */
 #pragma omp parallel default(none) private(x), firstprivate(sum), shared(pi)
   {
+    //firstprivate() is just like private but the first thread will also initialize this variable
 /**
  * See http://jakascorner.com/blog/2016/06/omp-for-scheduling.html
  * for a description of all possible scheduling types.
  */
-#pragma omp for schedule(static)
+#pragma omp for schedule(static) //static is default
     for (unsigned int i = 0; i < n; ++i)
       {
         x = h * (i + 0.5);
-        sum += 4.0 / (1.0 + x * x);
+        sum += 4.0 / (1.0 + x * x); //summing the contribution of each f(x)
+        //std::pow() inefficient in this case
       }
 
 // Critical block, to prevent data race!
 // Atomic is just a shorthand for a critical variable read/write operation.
+
+/**
+ * If not present each thread would update pi regardless of the other.
+ * atomic update is better the omp critical in this case. Indeed, with critical we can manage every line of code to be executed on at the time but
+ * this is very costly. Atomic does not work everytime but is much more performant and works with a limited scope of operations
+*/
 #pragma omp atomic update
     pi += h * sum;
   }

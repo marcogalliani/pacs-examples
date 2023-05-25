@@ -68,7 +68,12 @@ main(int argc, char **argv)
       MPI_Status status;
 
       // Probe for incoming message and get the status.
-      MPI_Probe(0, 10, mpi_comm, &status);
+      MPI_Probe(0, 10, mpi_comm, &status); 
+
+      //in this way we do not need another communication to pass the size of the vector
+      //We probe for incoming messages and get the size of those messages 
+      // -> dynamic
+      // communication are costly
 
       // Get the count from the status.
       int array_length;

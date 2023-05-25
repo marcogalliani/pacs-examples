@@ -6,6 +6,7 @@
 
 /**
  * Same as 03-pi.cpp, but using parallel reduction.
+ * Recuction is a very common operation -> specific omp directive
  */
 int
 main(int argc, char **argv)

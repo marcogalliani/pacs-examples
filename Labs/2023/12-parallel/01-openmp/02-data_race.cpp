@@ -27,7 +27,7 @@ main(int argc, char **argv)
   int serial_checksum = 0;
   for (size_t i = 0; i < n - 1; ++i)
     {
-      a[i] = a[i + 1] + b[i];
+      a[i] = a[i + 1] + b[i]; //recursive formula
 
       std::cout << "i = " << i << ", a[" << i << "] = a[" << i + 1 << "] + b["
                 << i << "] = " << a[i + 1] << " + " << b[i] << " = " << a[i]
@@ -66,7 +66,8 @@ main(int argc, char **argv)
          * (or a[i - 1]) before the current thread computes a[i],
          * the result will likely be wrong.
          */
-        a[i] = a[i + 1] + b[i];
+        a[i] = a[i + 1] + b[i]; // this loop is not parallelarizable
+        
 
 #pragma omp critical
         {

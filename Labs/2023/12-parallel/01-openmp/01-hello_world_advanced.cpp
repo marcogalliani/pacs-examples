@@ -1,5 +1,4 @@
-#include <omp.h>
-
+#include <omp.h> //to use openmp
 #include <iostream>
 
 int
